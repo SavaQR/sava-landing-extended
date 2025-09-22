@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVA - The Next Generation of CGM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            color: #111827;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: #ffffff;
+        }
+
+        .logo {
+            height: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #000000;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #000000;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            max-width: 36rem;
+            margin-bottom: 1.5rem;
+            color: #374151;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #000000;
+            color: #ffffff;
+            padding: 0.875rem 2rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-icon {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        /* Key Differentiators */
+        .features {
+            padding: 2rem 1.5rem;
+            max-width: 80rem;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .features-content h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #000000;
+        }
+
+        .features-content p {
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .features-list {
+            list-style: none;
+            color: #374151;
+        }
+
+        .features-list li {
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Community Section */
+        .community {
+            padding: 2rem 1.5rem;
+            background: #f9fafb;
+            text-align: center;
+        }
+
+        .community h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #000000;
+        }
+
+        .community p {
+            max-width: 48rem;
+            margin: 0 auto 2rem;
+            color: #374151;
+            font-size: 1.125rem;
+        }
+
+        /* Input Form */
+        .form-section {
+            background: #ffffff;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 32rem;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #000000;
+        }
+
+        .form-subtitle {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .input {
+            flex: 1;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-full {
+            width: 100%;
+        }
+
+        .submit-btn {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .social-proof {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 2rem 1.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-align: center;
+            background: #ffffff;
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Success state */
+        .success-message {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="logo">SAVA</div>
+        <h1>The Next Generation of CGM</h1>
+        <p>
+            A breakthrough sensor paired with an intuitive app. More comfort, more accuracy, more than glucose.
+        </p>
+        <button class="btn pulse" onclick="scrollToForm()">
+            Join the Waitlist
+            <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"/>
+            </svg>
+        </button>
+    </section>
+
+    <!-- Key Differentiators -->
+    <section class="features">
+        <div class="features-content">
+            <h2>Why Sava?</h2>
+            <p>
+                Sava is more than a CGM. We are rethinking what a wearable can do—for people living with diabetes today, and for anyone seeking deeper health insights tomorrow.
+            </p>
+            <ul class="features-list">
+                <li>• Pain‑free, ultra‑precise microsensor</li>
+                <li>• 10+ days continuous wear without sensor changes</li>
+                <li>• App with contextual alerts & smart insights tailored to your needs</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community">
+        <h2>Shape the Future</h2>
+        <p>
+            Join the waitlist. Be among the first to revolutionize health monitoring.
+        </p>
+        <button class="btn" onclick="scrollToForm()">
+            Be Among the First
+            <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"/>
+            </svg>
+        </button>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section" id="form">
+        <div class="form-container">
+            <div class="form-title">Reserve Your Spot</div>
+            <div class="form-subtitle">Be the first to experience next-generation biosensing</div>
+            
+            <form id="waitlistForm">
+                <div class="form-group">
+                    <div class="form-row">
+                        <input type="text" class="input" placeholder="First name" name="firstName" required>
+                        <input type="text" class="input" placeholder="Last name" name="lastName" required>
+                    </div>
+                    <input type="email" class="input input-full" placeholder="Enter your email address" name="email" required>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="isDiabetic" class="checkbox">
+                            <span class="checkmark"></span>
+                            I am living with diabetes
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn submit-btn">
+                        Join Now
+                        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            
+            <div class="social-proof">
+                🚀 Join thousands on the waitlist for early access
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Sava Technologies – London, UK</p>
+        <p>Biosensor under investigation. Subject to regulatory approval.</p>
+    </footer>
+
+    <script>
+        // ⚠️ REMPLACEZ PAR VOTRE NOUVELLE URL GOOGLE APPS SCRIPT
+        const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbxDbiMKPn0a6nsfMnmWcbv-SjoeozszFi9L-1xjZ8iItwMdh8eLNO1rF--Tm_qMatQ/exec;
+        
+        function scrollToForm() {
+            document.getElementById('form').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+            document.querySelector('input[name="firstName"]').focus();
+        }
+
+        document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = this;
+            const button = form.querySelector('button');
+            const firstName = form.querySelector('input[name="firstName"]').value;
+            const lastName = form.querySelector('input[name="lastName"]').value;
+            const email = form.querySelector('input[name="email"]').value;
+
+            button.textContent = "Joining...";
+            button.disabled = true;
+
+            // Supprimer anciens messages
+            const oldMessages = form.querySelectorAll('.success-message, .error-message');
+            oldMessages.forEach(msg => msg.remove());
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: "POST",
+                    mode: 'no-cors',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        source: "QR Code Landing Page v2"
+                    })
+                });
+
+                // Avec no-cors, on assume que ça a marché
+                const successMsg = document.createElement("div");
+                successMsg.className = "success-message";
+                successMsg.textContent = `🎉 Welcome ${firstName}! You're in! We'll keep you updated.`;
+                form.appendChild(successMsg);
+                form.reset();
+
+                setTimeout(() => {
+                    if (successMsg.parentNode) {
+                        successMsg.remove();
+                    }
+                }, 5000);
+
+            } catch (err) {
+                const errorMsg = document.createElement("div");
+                errorMsg.className = "error-message";
+                errorMsg.textContent = "⚠️ Something went wrong. Please try again.";
+                form.appendChild(errorMsg);
+                
+                setTimeout(() => {
+                    if (errorMsg.parentNode) {
+                        errorMsg.remove();
+                    }
+                }, 5000);
+            }
+
+            button.innerHTML = `
+                Join Now
+                <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"/>
+                </svg>
+            `;
+            button.disabled = false;
+        });
+    </script>
+</body>
+</html>
