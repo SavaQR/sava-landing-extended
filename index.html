@@ -369,81 +369,90 @@
     </footer>
 
     <script>
-        // ⚠️ REMPLACEZ PAR VOTRE NOUVELLE URL GOOGLE APPS SCRIPT
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjEUDUVFE4GSOALjtAoovTrSdZZt6HyMmnNxGzJTOjB_LhexNLLlxeihfoJCpFtPU5fg/exec";
-        
-        function scrollToForm() {
-            document.getElementById('form').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'center'
-            });
-            document.querySelector('input[name="firstName"]').focus();
-        }
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjEUDUVFE4GSOALjtAoovTrSdZZt6HyMmnNxGzJTOjB_LhexNLLlxeihfoJCpFtPU5fg/exec"; // Remplacez par votre vraie URL
 
-        document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const form = this;
-            const button = form.querySelector('button');
-            const firstName = form.querySelector('input[name="firstName"]').value;
-            const lastName = form.querySelector('input[name="lastName"]').value;
-            const email = form.querySelector('input[name="email"]').value;
+function scrollToForm() {
+  document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+  document.querySelector('input[name="firstName"]').focus();
+}
 
-            button.textContent = "Joining...";
-            button.disabled = true;
+document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = this;
+  const button = form.querySelector('button');
+  
+  // Récupérer les valeurs
+  const firstName = form.querySelector('input[name="firstName"]').value;
+  const lastName = form.querySelector('input[name="lastName"]').value;
+  const email = form.querySelector('input[name="email"]').value;
+  
+  // ✅ CORRECTION : Récupérer correctement la checkbox
+  const checkboxElement = form.querySelector('input[name="isDiabetic"]');
+  const isDiabetic = checkboxElement ? checkboxElement.checked : false;
+  
+  console.log('🔍 DEBUG - isDiabetic:', isDiabetic, typeof isDiabetic);
 
-            // Supprimer anciens messages
-            const oldMessages = form.querySelectorAll('.success-message, .error-message');
-            oldMessages.forEach(msg => msg.remove());
+  button.textContent = "Joining...";
+  button.disabled = true;
 
-            try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: "POST",
-                    mode: 'no-cors',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        firstName: firstName,
-                        lastName: lastName,
-                        email: email,
-                        source: "QR Code Landing Page v2"
-                    })
-                });
+  // Supprimer anciens messages
+  const oldMessages = form.querySelectorAll('.success-message, .error-message');
+  oldMessages.forEach(msg => msg.remove());
 
-                // Avec no-cors, on assume que ça a marché
-                const successMsg = document.createElement("div");
-                successMsg.className = "success-message";
-                successMsg.textContent = `🎉 Welcome ${firstName}! You're in! We'll keep you updated.`;
-                form.appendChild(successMsg);
-                form.reset();
+  try {
+    const payload = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      isDiabetic: isDiabetic, // true ou false
+      source: "QR Code Landing Page v2"
+    };
+    
+    console.log('🔍 PAYLOAD:', payload);
 
-                setTimeout(() => {
-                    if (successMsg.parentNode) {
-                        successMsg.remove();
-                    }
-                }, 5000);
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: 'no-cors',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload)
+    });
 
-            } catch (err) {
-                const errorMsg = document.createElement("div");
-                errorMsg.className = "error-message";
-                errorMsg.textContent = "⚠️ Something went wrong. Please try again.";
-                form.appendChild(errorMsg);
-                
-                setTimeout(() => {
-                    if (errorMsg.parentNode) {
-                        errorMsg.remove();
-                    }
-                }, 5000);
-            }
+    // Message de succès
+    const successMsg = document.createElement("div");
+    successMsg.className = "success-message";
+    successMsg.textContent = `🎉 Welcome ${firstName}! You're in! [Debug: Diabetic = ${isDiabetic}]`;
+    form.appendChild(successMsg);
+    form.reset();
 
-            button.innerHTML = `
-                Join Now
-                <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"/>
-                </svg>
-            `;
-            button.disabled = false;
-        });
+    setTimeout(() => {
+      if (successMsg.parentNode) {
+        successMsg.remove();
+      }
+    }, 5000);
+
+  } catch (err) {
+    const errorMsg = document.createElement("div");
+    errorMsg.className = "error-message";
+    errorMsg.textContent = "⚠️ Something went wrong. Please try again.";
+    form.appendChild(errorMsg);
+    
+    setTimeout(() => {
+      if (errorMsg.parentNode) {
+        errorMsg.remove();
+      }
+    }, 5000);
+  }
+
+  button.innerHTML = `
+    Join Now
+    <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"/>
+    </svg>
+  `;
+  button.disabled = false;
+});
     </script>
 </body>
 </html>
